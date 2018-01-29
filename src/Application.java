@@ -29,6 +29,7 @@ public class Application {
             try {
                 String argument = br.readLine();
                 run = application.handleUserInput(argument);
+                System.out.println();
             } catch (Exception e) {
                 System.out.println("Wrong input!");
             }
@@ -114,7 +115,6 @@ public class Application {
             for(String componentInformation : this.getComponents()) {
                 System.out.printf("%s ", componentInformation);
             }
-            System.out.println();
             return true;
         }
         // Handle show current component.

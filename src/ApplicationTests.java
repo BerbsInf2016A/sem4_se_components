@@ -1,9 +1,37 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 public class ApplicationTests {
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+    }
+
+    @After
+    public void restoreStreams() {
+        System.setOut(System.out);
+        System.setErr(System.err);
+    }
+
+    @Test
+    public void Application_HandleUserInput_ShowComponents() {
+        Application testee = new Application();
+        
+        testee.handleUserInput("show components");
+
+        Assert.assertEquals("md5hash sha256hash", outContent.toString().trim());
+    }
+
     @Test
     public void Application_LoadMD5HashComponent() {
 
