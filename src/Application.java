@@ -42,7 +42,6 @@ public class Application {
             classInstance = createdClass.getMethod("getInstance",new Class[0]).invoke(null);
             port = createdClass.getDeclaredField("port").get(classInstance);
 
-            Method getVersion = port.getClass().getMethod("getVersion");
         } catch (Exception e) {
             System.out.println("--- exception");
             System.out.println(e.getMessage());
@@ -75,7 +74,7 @@ public class Application {
      * @param operation The name of the method to call.
      * @return The return value of the called method.
      */
-    private String callMethod(String operation) {
+    public String callMethod(String operation) {
         String result = "";
 
         try {
@@ -94,7 +93,7 @@ public class Application {
      * @param value The value which should be hashed.
      * @return The hashed value.
      */
-    private String executeHash(String value) {
+    public String executeHash(String value) {
         return this.callMethod("hash", value);
     }
 
@@ -166,7 +165,7 @@ public class Application {
      *
      * @return returns a list of components.
      */
-    private List<String> getComponents() {
+    public List<String> getComponents() {
         List<String> components = new ArrayList<>();
         for ( HashType component :  HashType.values()) {
             components.add(component.toString());
@@ -179,7 +178,7 @@ public class Application {
      *
      * @return The version of the current component.
      */
-    private String getCurrentComponentInformation() {
+    public String getCurrentComponentInformation() {
         return this.callMethod("getVersion");
     }
 
@@ -188,14 +187,11 @@ public class Application {
      *
      * @param hashType The hash type to set.
      */
-    private void updateConfigAndComponent(HashType hashType) {
+    public void updateConfigAndComponent(HashType hashType) {
         if(!(Configuration.instance.getHashType() == hashType)){
             Configuration.instance.setHashType(hashType);
             this.createHashPortInstance();
         }
     }
-
-
-
 
 }
