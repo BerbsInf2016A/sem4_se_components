@@ -112,8 +112,14 @@ public class Application {
     public boolean handleUserInput(String argument) {
         // Handle show components.
         if (argument.trim().toLowerCase().equals("show components")) {
-            for(String componentInformation : this.getComponents()) {
+            List<String> components = this.getComponents();
+            for (int i = 0; i < components.size(); i++) {
+                String componentInformation = components.get(i);
                 System.out.printf("%s ", componentInformation);
+                if( i == components.size() - 1) {
+                    String separator = System.getProperty("line.separator");
+                    System.out.printf("%s ", separator);
+                }
             }
             return true;
         }
