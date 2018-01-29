@@ -2,6 +2,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
@@ -30,20 +31,34 @@ public class Application {
             System.out.println(e.getMessage());
         }
     }
-/*
-    public int execute(int a,int b,String operation) {
-        int result = Integer.MAX_VALUE;
+
+    public String callMethod(String operation, String value) {
+        String result = "";
 
         try {
-            Method method = port.getClass().getMethod(operation,int.class,int.class);
-            result = (Integer)method.invoke(port,a,b);
+            Method method = port.getClass().getMethod(operation,String.class);
+            result = (String)method.invoke(port, value);
         } catch (Exception e) {
             System.out.println("operation " + operation + " not supported.");
         }
 
         return result;
     }
-*/
+
+    private String callMethod(String operation) {
+        String result = "";
+
+        try {
+            Method method = port.getClass().getMethod(operation);
+            result = (String)method.invoke(port);
+        } catch (Exception e) {
+            System.out.println("operation " + operation + " not supported.");
+        }
+
+        return result;
+    }
+
+
 
     public static void main(String... args) {
         Application application = new Application();
@@ -63,8 +78,8 @@ public class Application {
         application.createHashPortInstance();
     }
 
-    private void executeHash(String value) {
-        //String hashValeu = port.execut....
+    private String executeHash(String value) {
+        return this.callMethod("hash", value);
     }
 
     private boolean askForEndOfExecution() {
@@ -73,7 +88,7 @@ public class Application {
 
     private String handleUserInput() {
         System.out.println("What do you want to do?");
-        System.out.println("Enter \"show components\", \"show current component\", \"set current component <name> [md5 or sha256]\", \"execute <data> [string]");
+        System.out.println("Enter \"show components\", \"show current component\", \"set current component <name> [md5 or sha256]\", \"callMethod <data> [string]");
 
         /*
 
@@ -91,6 +106,27 @@ public class Application {
 
     }
 
-    private void updateConfigAndComponent(HashType hashType) {
+    private List<String> getComponents() {
+        List<String> components = new ArrayList<>();
+        for ( HashType component :  HashType.values()) {
+            components.add(component.toString());
+        }
+        return components;
     }
+
+    private String getCurrentComponentInformation() {
+        this.callMethod("getVersion");
+    }
+
+
+    private void updateConfigAndComponent(HashType hashType) {
+        if(!(Configuration.instance.getHashType() == hashType)){
+            Configuration.instance.setHashType(hashType);
+            this.createHashPortInstance();
+        }
+    }
+
+
+
+
 }

@@ -14,12 +14,26 @@ public enum Configuration {
             FileInputStream fileInputStream = new FileInputStream(userDirectory + fileSeparator + "hash.props");
             properties.load(fileInputStream);
             fileInputStream.close();
-            if (properties.getProperty("hashType").equals("md5"))
+            if (properties.getProperty("hashType").equals("md5hash"))
                 return HashType.md5hash;
-            else if (properties.getProperty("hashType").equals("sha256"))
+            else if (properties.getProperty("hashType").equals("sha256hash"))
                 return HashType.sha256hash;
             else
                 return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    public void setHashType( HashType type) {
+        try {
+            Properties properties = new Properties();
+            FileInputStream fileInputStream = new FileInputStream(userDirectory + fileSeparator + "hash.props");
+            properties.load(fileInputStream);
+            fileInputStream.close();
+            properties.setProperty("hashType", type.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
