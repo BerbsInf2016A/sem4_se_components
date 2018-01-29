@@ -1,2 +1,2 @@
-public interface IComponent {
+public interface IHash {
 }
