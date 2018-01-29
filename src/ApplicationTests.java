@@ -57,7 +57,7 @@ public class ApplicationTests {
 
         String result = testee.executeHash("testhashvalue");
 
-        Assert.assertEquals( "MD5Hash should be correct","785BDA25E5F90837DD11517C38B80067", result);
+        Assert.assertEquals( "MD5Hash should be correct","785BDA25E5F90837DD11517C38B80067".toLowerCase(), result.toLowerCase());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class ApplicationTests {
 
         String result = testee.executeHash("testhashvalue");
 
-        Assert.assertEquals( "SHA256Hash should be correct","9DADF68D7CF63135232D6F0DB1B343B8161987B3AC51E835E8E6A660C290DD84", result);
+        Assert.assertEquals( "SHA256Hash should be correct","9DADF68D7CF63135232D6F0DB1B343B8161987B3AC51E835E8E6A660C290DD84".toLowerCase(), result.toLowerCase());
     }
 
 }
