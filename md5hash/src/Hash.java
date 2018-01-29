@@ -1,43 +1,47 @@
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
 import java.security.MessageDigest;
 
 public class Hash {
+    /**
+     * The hash instance.
+     */
     private static Hash instance = new Hash();
+    /**
+     * The port instance.
+     */
     public Port port;
 
+    /**
+     * The hash component.
+     */
     private Hash(){
         this.port = new Port();
     }
 
+    /**
+     * Returns the instance.
+     *
+     * @return The instance of the component.
+     */
     public static Hash getInstance() {
         return instance;
     }
-    
-    public class Port implements IHash {
 
-        private Method[] methods = getClass().getMethods();
-
-        public String getVersion() {
-            return innerGetVersion();
-        }
-
-        public String hash(String value) {
-            return innerHash( value );
-        }
-
-        public void listMethods() {
-            System.out.println("--- public methods for " + getClass().getName());
-            for (int i = 0; i < methods.length; i++)
-                if (!methods[i].toString().contains("Object") && !methods[i].toString().contains("list"))
-                    System.out.println(methods[i]);
-            System.out.println("---");
-        }
-    }
+    /**
+     * Returns the version string.
+     *
+     * @return The version string.
+     */
     public String innerGetVersion() {
         return "MD5Hash - Version 1.0";
     }
 
+    /**
+     * The method to calculate the hash value.
+     *
+     * @param input The value to hash.
+     * @return The hashed value.
+     */
     private String innerHash(String input){
         // Copied from: http://www.asjava.com/core-java/java-md5-example/
         byte[] source;
@@ -67,5 +71,30 @@ public class Hash {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * The port for the hash component.
+     */
+    public class Port implements IHash {
+
+        /**
+         * Gets the version of the component.
+         *
+         * @return The version string.
+         */
+        public String getVersion() {
+            return innerGetVersion();
+        }
+
+        /**
+         * Calculate the hash value for the parameter.
+         *
+         * @param value The value to hash.
+         * @return The hashed value.
+         */
+        public String hash(String value) {
+            return innerHash( value );
+        }
     }
 }
