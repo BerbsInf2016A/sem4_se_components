@@ -81,6 +81,18 @@ public class Application {
     }
 
     private boolean askForEndOfExecution() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Done? Y/N");
+
+        try {
+            String argument = br.readLine();
+            if (argument.toUpperCase().equals("Y")) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
@@ -92,22 +104,33 @@ public class Application {
 
         try {
             String argument = br.readLine();
-            if (argument.equals("show components")) {
+            if (argument.trim().equals("show components")) {
                 for(String componentInformation : this.getComponents()) {
-                    System.out.printf(" %s ", componentInformation);
+                    System.out.printf("%s ", componentInformation);
                 }
                 System.out.println();
-            } else if (argument.equals("show current component")) {
+            } else if (argument.trim().equals("show current component")) {
                 System.out.println(this.getCurrentComponentInformation());
             } else if (argument.startsWith("set current component")) {
-                argument = argument.replace("set current component ", "");
-                HashType hashType = HashType.valueOf(argument.toLowerCase());
-                this.updateConfigAndComponent(hashType);
+                argument = argument.replace("set current component", "").trim();
+                switch(argument.toLowerCase()) {
+                    case "mda5hash":
+                        this.updateConfigAndComponent(HashType.md5hash);
+                        break;
+                    case "sha256hash":
+                        this.updateConfigAndComponent(HashType.sha256hash);
+                        break;
+                    default:
+                        System.out.println("No such Component found!");
+                        break;
+                }
             } else if (argument.startsWith("execute")) {
-                argument = argument.replace("execute ", "");
+                argument = argument.replace("execute", "").trim();
                 System.out.println("Result: " + this.executeHash(argument));
+            } else {
+                System.out.println("Wrong input!");
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Wrong input!");
         }
     }
