@@ -39,17 +39,22 @@ public class Hash {
         return "SHA256Hash - Version 1.0";
     }
 
+    // Copied from: https://www.quickprogrammingtips.com/java/how-to-generate-sha256-hash-in-java.html
     private String innerHash(String value){
-        // Copied from: https://www.quickprogrammingtips.com/java/how-to-generate-sha256-hash-in-java.html
         String result = null;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(value.getBytes("UTF-8"));
-            return DatatypeConverter.printHexBinary(hash);
-        } catch(Exception ex) {
+            return bytesToHex(hash); // make it printable
+        }catch(Exception ex) {
             ex.printStackTrace();
         }
         return result;
-
     }
+
+    // Copied from: https://www.quickprogrammingtips.com/java/how-to-generate-sha256-hash-in-java.html
+    private String  bytesToHex(byte[] hash) {
+        return DatatypeConverter.printHexBinary(hash);
+    }
+
 }
