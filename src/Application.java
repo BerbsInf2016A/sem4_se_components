@@ -108,15 +108,22 @@ public class Application {
     /**
      * Handles the user input.
      */
-    private boolean handleUserInput(String argument) {
+    public boolean handleUserInput(String argument) {
+        // Handle show components.
         if (argument.trim().toLowerCase().equals("show components")) {
             for(String componentInformation : this.getComponents()) {
                 System.out.printf("%s ", componentInformation);
             }
             System.out.println();
-        } else if (argument.trim().toLowerCase().equals("show current component")) {
+            return true;
+        }
+        // Handle show current component.
+        if (argument.trim().toLowerCase().equals("show current component")) {
             System.out.println(this.getCurrentComponentInformation());
-        } else if (argument.toLowerCase().startsWith("set current component")) {
+            return true;
+        }
+        // Handle set current component.
+        if (argument.toLowerCase().startsWith("set current component")) {
             argument = argument.replace("set current component", "").trim();
             switch(argument.toLowerCase()) {
                 case "md5hash":
@@ -129,15 +136,21 @@ public class Application {
                     System.out.println("No such Component found!");
                     break;
             }
-        } else if (argument.toLowerCase().startsWith("execute")) {
+            return true;
+        }
+        // Handle execute command.
+        if (argument.toLowerCase().startsWith("execute")) {
             argument = argument.replace("execute", "").trim();
             System.out.println("Result: " + this.executeHash(argument));
-        } else if (argument.trim().toLowerCase().equals("quit")) {
+            return true;
+        }
+        // Handle quit command.
+        if (argument.trim().toLowerCase().equals("quit")) {
             return false;
-        } else {
-            System.out.println("Wrong input!");
         }
 
+        // Handle unknown command.
+        System.out.println("Wrong input!");
         return true;
     }
 
