@@ -130,7 +130,7 @@ public class Application {
         }
         // Handle set current component.
         if (argument.toLowerCase().startsWith("set current component")) {
-            argument = argument.replace("set current component", "").trim();
+            argument = argument.toLowerCase().replace("set current component", "").trim();
             switch(argument.toLowerCase()) {
                 case "md5hash":
                     this.updateConfigAndComponent(HashType.md5hash);
@@ -149,6 +149,7 @@ public class Application {
         // Handle execute command.
         if (argument.toLowerCase().startsWith("execute")) {
             argument = argument.replace("execute", "").trim();
+            argument = argument.replace("EXECUTE", "").trim();
             System.out.println("Result: " + this.executeHash(argument));
             return true;
         }
