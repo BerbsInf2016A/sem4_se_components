@@ -26,10 +26,31 @@ public class ApplicationTests {
     @Test
     public void Application_HandleUserInput_ShowComponents() {
         Application testee = new Application();
-        
+
         testee.handleUserInput("show components");
 
-        Assert.assertEquals("md5hash sha256hash", outContent.toString().trim());
+        Assert.assertEquals("Should show all available components","md5hash sha256hash", outContent.toString().trim());
+    }
+
+    @Test
+    public void Application_HandleUserInput_ShowCurrentComponent() {
+        Application testee = new Application();
+        testee.updateConfigAndComponent(HashType.md5hash);
+        testee.createHashPortInstance();
+
+        testee.handleUserInput("show current component");
+
+
+        Assert.assertEquals("Should show the version of the current component", "MD5Hash - Version 1.0", outContent.toString().trim());
+    }
+
+    @Test
+    public void Application_HandleUserInput_Quit() {
+        Application testee = new Application();
+
+        boolean hasExited = !testee.handleUserInput("quit");
+
+        Assert.assertTrue("Should exit loop!", hasExited);
     }
 
     @Test
