@@ -11,12 +11,18 @@ public class ApplicationTests {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
+    /**
+     * Used for methods which use the console.
+     */
     @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
 
+    /**
+     * Used for methods which use the console.
+     */
     @After
     public void restoreStreams() {
         System.setOut(System.out);
@@ -40,7 +46,6 @@ public class ApplicationTests {
 
         testee.handleUserInput("show current component");
 
-
         Assert.assertEquals("Should show the version of the current component", "MD5Hash - Version 1.0", outContent.toString().trim());
     }
 
@@ -49,7 +54,6 @@ public class ApplicationTests {
         Application testee = new Application();
 
         boolean hasExited = !testee.handleUserInput("quit");
-
         Assert.assertTrue("Should exit loop!", hasExited);
     }
 
@@ -61,7 +65,6 @@ public class ApplicationTests {
         testee.createHashPortInstance();
 
         testee.handleUserInput("set current component md5hash");
-
         String currentComponent = testee.getCurrentComponentInformation();
 
         Assert.assertEquals("MD5Hash should be set","MD5Hash - Version 1.0", currentComponent);
@@ -75,7 +78,6 @@ public class ApplicationTests {
         testee.createHashPortInstance();
 
         testee.handleUserInput("set current component sha256hash");
-
         String currentComponent = testee.getCurrentComponentInformation();
 
         Assert.assertEquals("MD5Hash should be set","SHA256Hash - Version 1.0", currentComponent);
@@ -87,7 +89,7 @@ public class ApplicationTests {
 
         testee.handleUserInput("set current component invalid");
 
-        Assert.assertEquals("Wong input should be messaged.", "No such component found!", outContent.toString().trim());
+        Assert.assertEquals("Wrong input should be messaged.", "No such component found!", outContent.toString().trim());
     }
 
     @Test
@@ -96,7 +98,7 @@ public class ApplicationTests {
 
         testee.handleUserInput("test");
 
-        Assert.assertEquals("Wong input should be messaged.", "Unknown command!", outContent.toString().trim());
+        Assert.assertEquals("Wrong input should be messaged.", "Unknown command!", outContent.toString().trim());
     }
 
     @Test
@@ -107,7 +109,6 @@ public class ApplicationTests {
         // Set the md5hash as current component.
         testee.updateConfigAndComponent(HashType.md5hash);
         testee.createHashPortInstance();
-
 
         String result = testee.getCurrentComponentInformation();
 
@@ -121,7 +122,6 @@ public class ApplicationTests {
         // Set the md5hash as current component.
         testee.updateConfigAndComponent(HashType.sha256hash);
         testee.createHashPortInstance();
-
 
         String result = testee.getCurrentComponentInformation();
 
@@ -149,7 +149,6 @@ public class ApplicationTests {
         testee.updateConfigAndComponent(HashType.md5hash);
         testee.createHashPortInstance();
 
-
         String result = testee.executeHash("testhashvalue");
 
         Assert.assertEquals( "MD5Hash should be correct","785BDA25E5F90837DD11517C38B80067".toLowerCase(), result.toLowerCase());
@@ -164,10 +163,8 @@ public class ApplicationTests {
         testee.updateConfigAndComponent(HashType.sha256hash);
         testee.createHashPortInstance();
 
-
         String result = testee.executeHash("testhashvalue");
 
         Assert.assertEquals( "SHA256Hash should be correct","9DADF68D7CF63135232D6F0DB1B343B8161987B3AC51E835E8E6A660C290DD84".toLowerCase(), result.toLowerCase());
     }
-
 }
