@@ -26,10 +26,56 @@ public class ApplicationTests {
     @Test
     public void Application_HandleUserInput_ShowComponents() {
         Application testee = new Application();
-        
+
         testee.handleUserInput("show components");
 
         Assert.assertEquals("md5hash sha256hash", outContent.toString().trim());
+    }
+
+    @Test
+    public void Application_HandleUserInput_setCurrentComponentMD5() {
+        Application testee = new Application();
+
+        testee.updateConfigAndComponent(HashType.sha256hash);
+        testee.createHashPortInstance();
+
+        testee.handleUserInput("set current component md5hash");
+
+        String currentComponent = testee.getCurrentComponentInformation();
+
+        Assert.assertEquals("MD5Hash should be set","MD5Hash - Version 1.0", currentComponent);
+    }
+
+    @Test
+    public void Application_HandleUserInput_setCurrentComponentSHA256() {
+        Application testee = new Application();
+
+        testee.updateConfigAndComponent(HashType.md5hash);
+        testee.createHashPortInstance();
+
+        testee.handleUserInput("set current component sha256hash");
+
+        String currentComponent = testee.getCurrentComponentInformation();
+
+        Assert.assertEquals("MD5Hash should be set","SHA256Hash - Version 1.0", currentComponent);
+    }
+
+    @Test
+    public void Application_HandleUserInput_setCurrentComponent_InvalidValue() {
+        Application testee = new Application();
+
+        testee.handleUserInput("set current component invalid");
+
+        Assert.assertEquals("Wong input should be messaged.", "No such component found!", outContent.toString().trim());
+    }
+
+    @Test
+    public void Application_HandleUserInput_UnknownCommand() {
+        Application testee = new Application();
+
+        testee.handleUserInput("test");
+
+        Assert.assertEquals("Wong input should be messaged.", "Unknown command!", outContent.toString().trim());
     }
 
     @Test

@@ -133,7 +133,7 @@ public class Application {
                     this.updateConfigAndComponent(HashType.sha256hash);
                     break;
                 default:
-                    System.out.println("No such Component found!");
+                    System.out.println("No such component found!");
                     break;
             }
             return true;
@@ -150,7 +150,7 @@ public class Application {
         }
 
         // Handle unknown command.
-        System.out.println("Wrong input!");
+        System.out.println("Unknown command!");
         return true;
     }
 
