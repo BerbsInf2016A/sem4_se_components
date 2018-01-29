@@ -21,7 +21,17 @@ public class Application {
 
         boolean run = true;
         while (run){
-           run = application.handleUserInput();
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+            System.out.println("What do you want to do?");
+            System.out.println("Enter \"show components\", \"show current component\", \"set current component  <name> [md5hash or sha256hash]\", \"execute <data> [string]\", \"quit");
+
+            try {
+                String argument = br.readLine();
+                run = application.handleUserInput(argument);
+            } catch (Exception e) {
+                System.out.println("Wrong input!");
+            }
         }
     }
 
@@ -98,45 +108,36 @@ public class Application {
     /**
      * Handles the user input.
      */
-    private boolean handleUserInput() {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.println("What do you want to do?");
-        System.out.println("Enter \"show components\", \"show current component\", \"set current component  <name> [md5hash or sha256hash]\", \"execute <data> [string]\", \"quit");
-
-        try {
-            String argument = br.readLine();
-            if (argument.trim().toLowerCase().equals("show components")) {
-                for(String componentInformation : this.getComponents()) {
-                    System.out.printf("%s ", componentInformation);
-                }
-                System.out.println();
-            } else if (argument.trim().toLowerCase().equals("show current component")) {
-                System.out.println(this.getCurrentComponentInformation());
-            } else if (argument.toLowerCase().startsWith("set current component")) {
-                argument = argument.replace("set current component", "").trim();
-                switch(argument.toLowerCase()) {
-                    case "mda5hash":
-                        this.updateConfigAndComponent(HashType.md5hash);
-                        break;
-                    case "sha256hash":
-                        this.updateConfigAndComponent(HashType.sha256hash);
-                        break;
-                    default:
-                        System.out.println("No such Component found!");
-                        break;
-                }
-            } else if (argument.toLowerCase().startsWith("execute")) {
-                argument = argument.replace("execute", "").trim();
-                System.out.println("Result: " + this.executeHash(argument));
-            } else if (argument.trim().toLowerCase().equals("quit")) {
-                return false;
-            } else {
-                System.out.println("Wrong input!");
+    private boolean handleUserInput(String argument) {
+        if (argument.trim().toLowerCase().equals("show components")) {
+            for(String componentInformation : this.getComponents()) {
+                System.out.printf("%s ", componentInformation);
             }
-        } catch (Exception e) {
+            System.out.println();
+        } else if (argument.trim().toLowerCase().equals("show current component")) {
+            System.out.println(this.getCurrentComponentInformation());
+        } else if (argument.toLowerCase().startsWith("set current component")) {
+            argument = argument.replace("set current component", "").trim();
+            switch(argument.toLowerCase()) {
+                case "md5hash":
+                    this.updateConfigAndComponent(HashType.md5hash);
+                    break;
+                case "sha256hash":
+                    this.updateConfigAndComponent(HashType.sha256hash);
+                    break;
+                default:
+                    System.out.println("No such Component found!");
+                    break;
+            }
+        } else if (argument.toLowerCase().startsWith("execute")) {
+            argument = argument.replace("execute", "").trim();
+            System.out.println("Result: " + this.executeHash(argument));
+        } else if (argument.trim().toLowerCase().equals("quit")) {
+            return false;
+        } else {
             System.out.println("Wrong input!");
         }
+
         return true;
     }
 
