@@ -1,4 +1,5 @@
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 public enum Configuration {
@@ -34,10 +35,10 @@ public enum Configuration {
             properties.load(fileInputStream);
             fileInputStream.close();
             properties.setProperty("hashType", type.toString());
+            properties.store(new FileOutputStream(userDirectory + fileSeparator + "hash.props"), null);
+            this.pathToJar = userDirectory + fileSeparator + getHashType() + fileSeparator + "jar" + fileSeparator + "component.jar";
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        return null;
     }
 }

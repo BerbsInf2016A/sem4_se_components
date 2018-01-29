@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -67,15 +70,10 @@ public class Application {
 
         boolean run = true;
         while (run){
-            String value = application.handleUserInput();
-
-            application.executeHash(value);
+           application.handleUserInput();
 
             run = !application.askForEndOfExecution();
         }
-
-
-        application.createHashPortInstance();
     }
 
     private String executeHash(String value) {
@@ -83,29 +81,42 @@ public class Application {
     }
 
     private boolean askForEndOfExecution() {
-        return true;
+        return false;
     }
 
-    private String handleUserInput() {
+    private void handleUserInput() {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         System.out.println("What do you want to do?");
-        System.out.println("Enter \"show components\", \"show current component\", \"set current component <name> [md5 or sha256]\", \"callMethod <data> [string]");
+        System.out.println("Enter \"show components\", \"show current component\", \"set current component  <name> [md5hash or sha256hash]\", \"execute <data> [string]");
 
-        /*
-
-        switch
-
-        Update config.... And load component
-
-
-
-         */
-        this.updateConfigAndComponent(requestedHashType);
-        this.executeHash(value);
-        String componentInfomration = this.getCurrentComponentInformation();
-        List<String> componentInformations = this.getComponents();
-
+        try {
+            String argument = br.readLine();
+            if (argument.equals("show components")) {
+                for(String componentInformation : this.getComponents()) {
+                    System.out.printf(" %s ", componentInformation);
+                }
+                System.out.println();
+            } else if (argument.equals("show current component")) {
+                System.out.println(this.getCurrentComponentInformation());
+            } else if (argument.startsWith("set current component")) {
+                argument = argument.replace("set current component ", "");
+                HashType hashType = HashType.valueOf(argument.toLowerCase());
+                this.updateConfigAndComponent(hashType);
+            } else if (argument.startsWith("execute")) {
+                argument = argument.replace("execute ", "");
+                System.out.println("Result: " + this.executeHash(argument));
+            }
+        } catch (IOException e) {
+            System.out.println("Wrong input!");
+        }
     }
 
+    /**
+     * Get the components.
+     *
+     * @return returns a list of components.
+     */
     private List<String> getComponents() {
         List<String> components = new ArrayList<>();
         for ( HashType component :  HashType.values()) {
@@ -114,11 +125,20 @@ public class Application {
         return components;
     }
 
+    /**
+     * Gets the current component information.
+     *
+     * @return The version of the current component.
+     */
     private String getCurrentComponentInformation() {
-        this.callMethod("getVersion");
+        return this.callMethod("getVersion");
     }
 
-
+    /**
+     * Updates the property file and reloads the component, if necessary.
+     *
+     * @param hashType The hash type to set.
+     */
     private void updateConfigAndComponent(HashType hashType) {
         if(!(Configuration.instance.getHashType() == hashType)){
             Configuration.instance.setHashType(hashType);
