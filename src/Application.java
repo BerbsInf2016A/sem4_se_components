@@ -11,30 +11,51 @@ import java.util.List;
 public class Application {
     private Object port;
 
+    /**
+     * Main method for the application.
+     * @param args
+     */
+    public static void main(String... args) {
+        Application application = new Application();
+        // Create last used component.
+        application.createHashPortInstance();
+
+        boolean run = true;
+        while (run){
+           application.handleUserInput();
+           run = !application.askForEndOfExecution();
+        }
+    }
+
+    /**
+     * Creates a port instance for the hash class.
+     */
     @SuppressWarnings({"rawtypes","unchecked"})
     public void createHashPortInstance() {
         Object classInstance;
 
         try {
-            System.out.println("pathToJar : " + Configuration.instance.pathToJar);
             URL[] urls = {new File(Configuration.instance.pathToJar).toURI().toURL()};
             URLClassLoader urlClassLoader = new URLClassLoader(urls,Application.class.getClassLoader());
             Class createdClass = Class.forName("Hash",true,urlClassLoader);
-            System.out.println("classInstance     : " + createdClass.toString());
 
-            classInstance = createdClass.getMethod("getInstance",new Class[0]).invoke(null,new Object[0]);
+            classInstance = createdClass.getMethod("getInstance",new Class[0]).invoke(null);
             port = createdClass.getDeclaredField("port").get(classInstance);
-            System.out.println("port      : " + port.hashCode());
 
             Method getVersion = port.getClass().getMethod("getVersion");
-            String version = (String)getVersion.invoke(port);
-            System.out.println("version   : " + version);
         } catch (Exception e) {
             System.out.println("--- exception");
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Calls a method on the port.
+     *
+     * @param operation The method name.
+     * @param value The parameter value.
+     * @return Return value of the called method.
+     */
     public String callMethod(String operation, String value) {
         String result = "";
 
@@ -48,6 +69,12 @@ public class Application {
         return result;
     }
 
+    /**
+     * Call a method without parmameters.
+     *
+     * @param operation The name of the method to call.
+     * @return The return value of the called method.
+     */
     private String callMethod(String operation) {
         String result = "";
 
@@ -61,25 +88,21 @@ public class Application {
         return result;
     }
 
-
-
-    public static void main(String... args) {
-        Application application = new Application();
-        // Create last used component.
-        application.createHashPortInstance();
-
-        boolean run = true;
-        while (run){
-           application.handleUserInput();
-
-            run = !application.askForEndOfExecution();
-        }
-    }
-
+    /**
+     * Execute the hash function.
+     *
+     * @param value The value which should be hashed.
+     * @return The hashed value.
+     */
     private String executeHash(String value) {
         return this.callMethod("hash", value);
     }
 
+    /**
+     * Ask the user if he wants to continue execution.
+     *
+     * @return Returns true, if end is wanted.
+     */
     private boolean askForEndOfExecution() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Done? Y/N");
@@ -96,6 +119,9 @@ public class Application {
         return false;
     }
 
+    /**
+     * Handles the user input.
+     */
     private void handleUserInput() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
