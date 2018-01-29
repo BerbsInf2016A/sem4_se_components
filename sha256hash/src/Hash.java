@@ -8,6 +8,10 @@ public class Hash {
         this.port = new Port();
     }
 
+    public static Hash getInstance() {
+        return instance;
+    }
+
     public class Port implements IHash {
 
         private Method[] methods = getClass().getMethods();
@@ -29,7 +33,7 @@ public class Hash {
         }
     }
     public String innergetVersion() {
-        return "MD5Hash - Version 1.0";
+        return "SHA256Hash - Version 1.0";
     }
 
     private String innerHash(String value){
