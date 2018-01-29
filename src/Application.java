@@ -24,7 +24,7 @@ public class Application {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
             System.out.println("What do you want to do?");
-            System.out.println("Enter \"show components\", \"show current component\", \"set current component  <name> [md5hash or sha256hash]\", \"execute <data> [string]\", \"quit");
+            System.out.println("Enter \"show components\", \"show current component\", \"set current component  <name> [md5hash or sha256hash]\", \"execute <data> [string]\", \"quit\"");
 
             try {
                 String argument = br.readLine();
@@ -128,9 +128,11 @@ public class Application {
             switch(argument.toLowerCase()) {
                 case "md5hash":
                     this.updateConfigAndComponent(HashType.md5hash);
+                    System.out.println("Component set!");
                     break;
                 case "sha256hash":
                     this.updateConfigAndComponent(HashType.sha256hash);
+                    System.out.println("Component set!");
                     break;
                 default:
                     System.out.println("No such component found!");
