@@ -34,7 +34,7 @@ public class Hash {
             System.out.println("---");
         }
     }
-    
+
     public String innerGetVersion() {
         return "SHA256Hash - Version 1.0";
     }
