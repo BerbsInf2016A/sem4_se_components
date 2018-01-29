@@ -49,7 +49,7 @@ public class Hash {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes("UTF-8"));
             return bytesToHex(hash); // make it printable
-        }catch(Exception ex) {
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
         return result;
@@ -62,7 +62,7 @@ public class Hash {
      * @param hash The hashed value.
      * @return
      */
-    private String  bytesToHex(byte[] hash) {
+    private String bytesToHex(byte[] hash) {
         return DatatypeConverter.printHexBinary(hash);
     }
 
@@ -87,7 +87,7 @@ public class Hash {
          * @return The hashed value.
          */
         public String hash(String value) {
-            return null;
+            return innerHash(value);
         }
     }
 }
