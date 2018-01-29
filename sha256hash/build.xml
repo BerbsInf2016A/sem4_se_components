@@ -12,9 +12,9 @@
 
     <target name="jar">
         <mkdir dir="jar"/>
-        <jar destfile="jar/component.jar" basedir="build">
+        <jar destfile="jar/hash.jar" basedir="build">
             <manifest>
-                <attribute name="Main-Class" value="Component"/>
+                <attribute name="Main-Class" value="Hash"/>
             </manifest>
         </jar>
     </target>
