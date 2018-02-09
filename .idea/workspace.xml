@@ -4,9 +4,6 @@
     <list default="true" id="0c569fbd-846e-4317-baf9-0600af973b6a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/build/Application.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/build/ApplicationTests.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/hash.props" afterPath="$PROJECT_DIR$/hash.props" />
       <change beforePath="$PROJECT_DIR$/md5hash/.idea/workspace.xml" afterPath="$PROJECT_DIR$/md5hash/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/sha256hash/.idea/workspace.xml" afterPath="$PROJECT_DIR$/sha256hash/.idea/workspace.xml" />
     </list>
@@ -53,8 +50,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="14" column="1" lean-forward="false" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+            <state relative-caret-position="565">
+              <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -457,7 +454,7 @@
       <updated>1511555344555</updated>
       <workItem from="1517219847743" duration="424000" />
       <workItem from="1517220937660" duration="11679000" />
-      <workItem from="1518179478814" duration="192000" />
+      <workItem from="1518179478814" duration="271000" />
     </task>
     <servers />
   </component>
@@ -494,7 +491,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12295000" />
+    <option name="totallyTimeSpent" value="12374000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
@@ -651,8 +648,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="14" column="1" lean-forward="false" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+        <state relative-caret-position="565">
+          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding />
         </state>
       </provider>
